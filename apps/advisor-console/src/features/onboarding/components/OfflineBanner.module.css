@@ -1,0 +1,10 @@
+/* src/features/onboarding/components/OfflineBanner.module.css */
+.offlineBanner {
+  width: 100%;
+  background: #ffefef; /* light red for offline */
+  color: #c00;
+  text-align: center;
+  padding: 8px 0;
+  font-weight: 600;
+  font-family: var(--font-family, sans-serif);
+}

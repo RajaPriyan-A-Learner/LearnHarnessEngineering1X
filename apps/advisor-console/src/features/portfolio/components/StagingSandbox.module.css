@@ -1,0 +1,132 @@
+/* apps/advisor-console/src/features/portfolio/components/StagingSandbox.module.css */
+
+.sandboxContainer {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: #e0e0e0;
+}
+
+.tradeTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tradeRow:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tradeRow td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.amountInput {
+  width: 70px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.amountInput:focus {
+  outline: none;
+  border-color: #4da6ff;
+}
+
+.buy {
+  color: #4da6ff;
+}
+
+.sell {
+  color: #ff6b6b;
+}
+
+.amberContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.amber {
+  color: #ffae42;
+}
+
+.red {
+  color: #ff4d4f;
+}
+
+.clear {
+  color: #52c41a;
+}
+
+.overrideBtn {
+  background: none;
+  border: 1px solid #ffae42;
+  color: #ffae42;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.overrideBtn:hover {
+  background: rgba(255, 174, 66, 0.1);
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: #ff4d4f;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.applyBtn {
+  background: linear-gradient(135deg, #4da6ff, #7a6eff);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.applyBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.proposalBtn {
+  background: linear-gradient(135deg, #60a6ff, #b36eff);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.proposalBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}

@@ -1,0 +1,80 @@
+/* apps/advisor-console/src/features/portfolio/components/ProposalPreview.module.css */
+
+.previewContainer {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: #e0e0e0;
+}
+
+.date {
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  color: #b0b0b0;
+}
+
+.rationale {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 16px;
+}
+
+.rationale:focus {
+  outline: none;
+  border-color: #4da6ff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.trades {
+  margin-top: 12px;
+}
+
+.tradeList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tradeItem {
+  margin-bottom: 6px;
+  color: #e5e5e5;
+}
+
+.exportBtn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #4da6ff, #7a6eff);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.exportBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

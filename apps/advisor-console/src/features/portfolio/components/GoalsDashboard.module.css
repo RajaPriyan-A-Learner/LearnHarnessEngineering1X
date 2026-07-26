@@ -1,0 +1,41 @@
+﻿.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #f1f5f9);
+}
+
+.addBtn {
+  padding: 0.5rem 1.25rem;
+  background: var(--color-accent, #6366f1);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.addBtn:hover {
+  opacity: 0.85;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}

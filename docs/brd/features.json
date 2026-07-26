@@ -1,0 +1,442 @@
+{
+  "project": "Wealth Management Advisor Console",
+  "version": "1.0.0",
+  "description": "Backlog configuration file mapping Epics, Features, and Stories with their respective acceptance criteria and dependency orders.",
+  "epics": [
+    {
+      "id": "EP-1",
+      "name": "Auth, Security & Portal Shell",
+      "description": "Scaffold workspaces, authentication gates, idle session handling, and layouts.",
+      "features": [
+        {
+          "id": "FE-1.1",
+          "name": "Authentication & MFA Gate",
+          "description": "Credentials login with secondary verification challenge.",
+          "dependencies": [],
+          "stories": [
+            {
+              "id": "ST-1.1.1",
+              "title": "Advisor Login Form",
+              "acceptanceCriteria": [
+                "Display email/password form with client-side field validation.",
+                "Submitting valid format credentials displays inline MFA challenge screen."
+              ]
+            },
+            {
+              "id": "ST-1.1.2",
+              "title": "MFA Challenge Code Verification",
+              "acceptanceCriteria": [
+                "Display 6-digit numeric verification code input field.",
+                "Mock Validation: Accept code starting with '12' as valid; throw error on others.",
+                "Successful submission resolves session access and refresh tokens."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-1.2",
+          "name": "Session Management & Silent Refresh",
+          "description": "Silent JWT rotations and session idle timeout timers.",
+          "dependencies": ["FE-1.1"],
+          "stories": [
+            {
+              "id": "ST-1.2.1",
+              "title": "Silent Token Refresh Interceptor",
+              "acceptanceCriteria": [
+                "Trigger silent refresh API calls 1 minute before access token expiry.",
+                "Failure of silent refresh automatically redirects user to login with notice."
+              ]
+            },
+            {
+              "id": "ST-1.2.2",
+              "title": "Session Inactivity Timeout",
+              "acceptanceCriteria": [
+                "Track user input (mouse moves, keypresses) to calculate 14-minute idle timeout.",
+                "Show overlay modal warning with 60-second countdown.",
+                "Log out and clear memory cache if countdown reaches zero."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-1.3",
+          "name": "Advisor Shell & Layouts",
+          "description": "Core responsive page layouts and navigation components.",
+          "dependencies": ["FE-1.1"],
+          "stories": [
+            {
+              "id": "ST-1.3.1",
+              "title": "Authenticated Layout Routing",
+              "acceptanceCriteria": [
+                "Provide sidebar navigation matching user role permissions.",
+                "Layout displays responsive navigation drawer on mobile and tablet screens."
+              ]
+            },
+            {
+              "id": "ST-1.3.2",
+              "title": "Household Context Header Bar",
+              "acceptanceCriteria": [
+                "Provide dynamic pinned top header bar displaying active client name, AUM, and risk index.",
+                "Header syncs instantaneously when active client changes in Zustand store."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EP-2",
+      "name": "Book of Business & Client Search",
+      "description": "Manage advisor clients directory, type-ahead search, and segment filtering.",
+      "features": [
+        {
+          "id": "FE-2.1",
+          "name": "Client Search Bar",
+          "description": "Type-ahead client search bar with debouncing.",
+          "dependencies": ["FE-1.3"],
+          "stories": [
+            {
+              "id": "ST-2.1.1",
+              "title": "Debounced Search Input",
+              "acceptanceCriteria": [
+                "Debounce search requests by 200ms before sending query commands.",
+                "Allows searching by client name, account number, or masked Tax ID."
+              ]
+            },
+            {
+              "id": "ST-2.1.2",
+              "title": "Keyboard Navigation Results list",
+              "acceptanceCriteria": [
+                "Supports pressing Down/Up arrows to navigate search results drop menu.",
+                "Pressing Enter loads highlighted client household dashboard."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-2.2",
+          "name": "Book of Business Filters",
+          "description": "Sorting and filtering client registries.",
+          "dependencies": ["FE-2.1"],
+          "stories": [
+            {
+              "id": "ST-2.2.1",
+              "title": "Segment and Due-Review Filters",
+              "acceptanceCriteria": [
+                "Provide checkboxes to filter list by HNW ($1M-$10M), UHNW ($10M+), and review-due markers.",
+                "Allows multi-select options, sorting results by AUM descending by default."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EP-3",
+      "name": "Holdings Grid & Market Ticker",
+      "description": "High performance data grids and real-time streaming tickers.",
+      "features": [
+        {
+          "id": "FE-3.1",
+          "name": "Virtualized Holdings Grid",
+          "description": "Windowed rendering for high density position lists.",
+          "dependencies": ["FE-1.3"],
+          "stories": [
+            {
+              "id": "ST-3.1.1",
+              "title": "Grid View Virtualization",
+              "acceptanceCriteria": [
+                "Maintain 60fps scrolling on tables holding 10,000+ mock security entries.",
+                "DOM mounts only visible rows, absolute-positioning viewport slices."
+              ]
+            },
+            {
+              "id": "ST-3.1.2",
+              "title": "Column Configurations & Pinning",
+              "acceptanceCriteria": [
+                "Allow dragging headers to resize and reorder column positions.",
+                "Supports pinning specific columns left or right, saving settings to LocalStorage."
+              ]
+            },
+            {
+              "id": "ST-3.1.3",
+              "title": "Grouping and Subtotal Rollups",
+              "acceptanceCriteria": [
+                "Allow grouping positions by asset class (Equities, Cash, Alternatives).",
+                "Displays collapsable sub-headers calculating weight and market value sums."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-3.2",
+          "name": "WebSocket Market Data Streaming",
+          "description": "Real-time quote streaming and rendering performance throttling.",
+          "dependencies": ["FE-3.1"],
+          "stories": [
+            {
+              "id": "ST-3.2.1",
+              "title": "WebSocket Connection Status",
+              "acceptanceCriteria": [
+                "Provide indicator badges: Live (Green), Delayed (Amber), and Offline (Red).",
+                "Displays banner notifying client on WebSocket drops, fallback to REST polling."
+              ]
+            },
+            {
+              "id": "ST-3.2.2",
+              "title": "Tick Coalescing & Flashing Cells",
+              "acceptanceCriteria": [
+                "Throttles incoming event loops to 500ms intervals before pushing updates to Zustand.",
+                "Updates animate with localized green/red flashing effects fading out after 800ms."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EP-4",
+      "name": "Portfolio Analytics & Rebalancing Sandbox",
+      "description": "Asset allocation wheels, model target comparisons, and staging what-if sandbox.",
+      "features": [
+        {
+          "id": "FE-4.1",
+          "name": "Allocation Charts",
+          "description": "Visualizing holdings asset groupings.",
+          "dependencies": ["FE-1.3"],
+          "stories": [
+            {
+              "id": "ST-4.1.1",
+              "title": "Asset Class SVG Wheels",
+              "acceptanceCriteria": [
+                "Render SVG allocation wheels responsive to layout resize parameters.",
+                "Hovering sections displays tooltips with segment weights and market values."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-4.2",
+          "name": "Model Drift Engine",
+          "description": "Analyzing variance against model targeted guidelines.",
+          "dependencies": ["FE-4.1"],
+          "stories": [
+            {
+              "id": "ST-4.2.1",
+              "title": "Drift Variance Calculations",
+              "acceptanceCriteria": [
+                "Compare current holdings asset weights against target portfolio models.",
+                "Display drift values; trigger 'Rebalance' proposals to bridge gaps."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-4.3",
+          "name": "What-If Staging Sandbox",
+          "description": "Hypothetical trade staging state computations.",
+          "dependencies": ["FE-3.2", "FE-4.2"],
+          "stories": [
+            {
+              "id": "ST-4.3.1",
+              "title": "Trade Staging Grids",
+              "acceptanceCriteria": [
+                "Enable staging buy/sell transactions in a local Zustand store.",
+                "Simulated transaction list displays fees, cash impacts, and capital gains tags."
+              ]
+            },
+            {
+              "id": "ST-4.3.2",
+              "title": "Sandbox Comparison Panels",
+              "acceptanceCriteria": [
+                "Allow naming, saving, and comparing multiple what-if layout configurations side-by-side."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EP-5",
+      "name": "Compliance Gating & Reports",
+      "description": "Trade screening validations, Reg BI overrides, and PDF proposal compiling.",
+      "features": [
+        {
+          "id": "FE-5.1",
+          "name": "Pre-Trade Compliance Checks",
+          "description": "Suitability checks and restricted lists validation.",
+          "dependencies": ["FE-4.3"],
+          "stories": [
+            {
+              "id": "ST-5.1.1",
+              "title": "Staged Trade Validator",
+              "acceptanceCriteria": [
+                "Analyze sandbox orders against concentration (no security > 10%) and risk profiles.",
+                "Displays inline warnings (Amber) or restricted lists blocks (Red)."
+              ]
+            },
+            {
+              "id": "ST-5.1.2",
+              "title": "Reg BI Justification Overrides",
+              "acceptanceCriteria": [
+                "Block proposal creation if Amber concentration warning is present.",
+                "Bypass block once advisor enters a minimum of 50 characters of rationale notes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-5.2",
+          "name": "Proposal Document Generation",
+          "description": "Branded PDF creation and version logs.",
+          "dependencies": ["FE-4.3"],
+          "stories": [
+            {
+              "id": "ST-5.2.1",
+              "title": "Client Ready PDF Exports",
+              "acceptanceCriteria": [
+                "Generates print-ready client reports with charts, fee listings, and disclaimers.",
+                "Applies clean print styles; formats breaks cleanly."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-5.3",
+          "name": "Compliance Review Dashboard",
+          "description": "Review tools for Compliance Officer role.",
+          "dependencies": ["FE-5.1"],
+          "stories": [
+            {
+              "id": "ST-5.3.1",
+              "title": "Proposal Audit Review",
+              "acceptanceCriteria": [
+                "Display pending proposals queue showing flags and justifications.",
+                "Enable buttons to Approve/Reject proposals, outputting events to audit log."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EP-6",
+      "name": "Goals & KYC Onboarding Wizard",
+      "description": "Goals funding trackers, resumable KYC steppers, and document uploading.",
+      "features": [
+        {
+          "id": "FE-6.1",
+          "name": "Financial Goals Dials",
+          "description": "Monte Carlo probability indicators.",
+          "dependencies": ["FE-1.3"],
+          "stories": [
+            {
+              "id": "ST-6.1.1",
+              "title": "Goals Progress Wheels",
+              "acceptanceCriteria": [
+                "Display goal status cards showing funding progress bars.",
+                "Visualizes Monte Carlo success: On Track (>80%), At Risk (50%-80%), Off Track (<50%)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-6.2",
+          "name": "Resumable KYC stepper Wizard",
+          "description": "Onboarding forms stepper with draft backup.",
+          "dependencies": ["FE-1.3"],
+          "stories": [
+            {
+              "id": "ST-6.2.1",
+              "title": "Step Validation & Save",
+              "acceptanceCriteria": [
+                "Validates input data before step changes.",
+                "Saves in-progress draft to IndexDB on each step transition."
+              ]
+            },
+            {
+              "id": "ST-6.2.2",
+              "title": "Draft Recovery Alerts",
+              "acceptanceCriteria": [
+                "Prompt advisors to restore unsaved drafts if wizard closed prematurely.",
+                "Loads previous data, setting active view to last validated step."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-6.3",
+          "name": "Document Uploader Zone",
+          "description": "Drag and drop uploading system.",
+          "dependencies": ["FE-6.2"],
+          "stories": [
+            {
+              "id": "ST-6.3.1",
+              "title": "Size and Type Filters",
+              "acceptanceCriteria": [
+                "Restrict file formats to PDF, PNG, and JPG; reject executables.",
+                "Limit file size to 10MB maximum, showing detailed error dialogs on limits."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EP-7",
+      "name": "Cross-Cutting Non-Functional Requirements (NFRs)",
+      "description": "Accessibility audits, PII masking systems, offline support, and locale configurations.",
+      "features": [
+        {
+          "id": "FE-7.1",
+          "name": "PII Security & Masking",
+          "description": "Securing sensitive client fields.",
+          "dependencies": ["FE-1.3"],
+          "stories": [
+            {
+              "id": "ST-7.1.1",
+              "title": "Tax ID Mask Timer",
+              "acceptanceCriteria": [
+                "Mask tax strings as default value (***-**-1234).",
+                "Reveal requires clicking show button; logs event to audit log.",
+                "Auto-masks display after 30 seconds of inactivity or focus loss."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-7.2",
+          "name": "Offline Support & Sync",
+          "description": "Offline connectivity notifications and sync resolution.",
+          "dependencies": ["FE-1.3"],
+          "stories": [
+            {
+              "id": "ST-7.2.1",
+              "title": "Offline Write Gating",
+              "acceptanceCriteria": [
+                "Display header notification on offline status.",
+                "Disable all transaction submissions and API updates, displaying cached databases."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FE-7.3",
+          "name": "i18n Readiness",
+          "description": "Externalized localization strings and formatting.",
+          "dependencies": ["FE-1.3"],
+          "stories": [
+            {
+              "id": "ST-7.3.1",
+              "title": "Locale Aware Formatting",
+              "acceptanceCriteria": [
+                "Source all text headers and labels from locales JSON files.",
+                "Adjust dates, currency separators, and percentage scales dynamically by active language."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

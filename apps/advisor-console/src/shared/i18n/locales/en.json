@@ -1,0 +1,7 @@
+{
+  "kyc_submit_success": "KYC submitted successfully!",
+  "restore_prompt": "Restore saved progress?",
+  "restore": "Restore",
+  "discard": "Discard",
+  "offline_message": "You are offline. Some features may be unavailable."
+}

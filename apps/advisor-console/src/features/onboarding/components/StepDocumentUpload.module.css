@@ -1,0 +1,53 @@
+.uploadZone {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.uploadZone:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.fileList {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.error {
+  color: #ff6b6b;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.buttons {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}

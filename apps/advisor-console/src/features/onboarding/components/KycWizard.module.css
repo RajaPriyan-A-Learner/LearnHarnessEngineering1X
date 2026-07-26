@@ -1,0 +1,27 @@
+﻿.wizardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  min-height: 100vh;
+  background: var(--color-bg-app, #0f172a);
+}
+
+.stepIndicator {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.stepDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border, #334155);
+  transition: background 0.2s;
+}
+
+.stepDotActive {
+  background: var(--color-accent, #6366f1);
+}
